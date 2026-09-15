@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 int main() {
-    char name[100];
-    char section[50];
+    char name[];
+    char section[];
     float q1, q2, q3, q4, average;
 
     printf("Enter Complete Name: ");
