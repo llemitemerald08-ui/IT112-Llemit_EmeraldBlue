@@ -1,11 +1,9 @@
 #include <stdio.h>
 
-#define MIN_BALANCE 100.00
-
-int main(void) {
-    double balance = 500.00;
-    double amount;
+int main() {
     int choice;
+    float balance = 500.00;
+    float amount;
 
     do {
         printf("\nBSIT BANK\n");
@@ -15,14 +13,7 @@ int main(void) {
         printf("[3] Withdraw\n");
         printf("[4] Exit\n");
         printf("Enter your choice: ");
-
-        if (scanf("%d", &choice) != 1) {
-            /* Non-numeric input: clear the buffer and ask again */
-            while (getchar() != '\n');
-            printf("\nInvalid input! Please enter a number from 1 to 4.\n");
-            choice = 0;
-            continue;
-        }
+        scanf("%d", &choice);
 
         switch (choice) {
             case 1:
@@ -31,35 +22,39 @@ int main(void) {
 
             case 2:
                 printf("Enter amount to deposit: ");
-                if (scanf("%lf", &amount) != 1 || amount <= 0) {
-                    while (getchar() != '\n');
-                    printf("Invalid amount! Deposit must be greater than P0.00.\n");
-                } else {
-                    balance += amount;
+                scanf("%f", &amount);
+
+                if (amount > 0) {
+                    balance = balance + amount;
                     printf("P%.2f deposited successfully!\n", amount);
+                } else {
+                    printf("Invalid deposit amount!\n");
                 }
                 break;
 
             case 3:
                 printf("Enter amount to withdraw: ");
-                if (scanf("%lf", &amount) != 1 || amount <= 0) {
-                    while (getchar() != '\n');
-                    printf("Invalid amount! Withdrawal must be greater than P0.00.\n");
-                } else if (balance - amount < MIN_BALANCE) {
-                    printf("Withdrawal denied! You must maintain at least P100.00 in your account\n");
+                scanf("%f", &amount);
+
+                if (amount <= 0) {
+                    printf("Invalid withdrawal amount!\n");
+                } else if (balance - amount < 100.00) {
+                    printf("Withdrawal denied! You must maintain "
+                           "at least P100.00 in your account\n");
                 } else {
-                    balance -= amount;
+                    balance = balance - amount;
                     printf("You withdrew P%.2f successfully!\n", amount);
                 }
                 break;
 
             case 4:
-                printf("\nThank you for banking with BSIT BANK. Goodbye!\n");
+                printf("Thank you for using BSIT BANK!\n");
                 break;
 
             default:
-                printf("\nInvalid choice! Please select 1, 2, 3, or 4.\n");
+                printf("Invalid choice! Please try again.\n");
         }
+
     } while (choice != 4);
 
     return 0;
